@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import OverlayApp from '../overlay/src/App';
-import SettingsApp from '../settings/src/App';
+import OverlayApp from '@/overlay/src/App';
+import SettingsApp from '@/settings/src/App';
 
 const container = document.getElementById('root');
 

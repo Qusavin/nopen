@@ -1,35 +1,37 @@
 # Repository Guidelines
 
-This guide keeps contributions focused and consistent with the Markdown Capture project’s Electron + React architecture.
-
 ## Project Structure & Module Organization
-- `src/main/`: Electron main process, window/hotkey/tray managers, and IPC wiring.
-- `src/preload/`: Context bridge scripts exposing safe APIs to the renderer.
-- `src/renderer/`: React UI, organized by feature-driven directories; reuse shared hooks/components.
-- `src/shared/` & `src/types/`: Cross-process utilities and TypeScript contracts—extend these before duplicating logic.
-- `assets/`: Static icons and branding; `out/` is the compiled build, while `dist/` holds packaged installers.
+- `src/main/` hosts the Electron main process, including window, hotkey, tray managers, and IPC wiring.
+- `src/preload/` exposes vetted APIs to the renderer via context bridges; keep surface areas minimal.
+- `src/renderer/` contains React features; prefer colocated state, shared hooks, and reusable UI primitives.
+- Shared contracts live in `src/shared/` and `src/types/`; extend these before copying logic across processes.
+- Build artifacts go to `out/`; installers land in `dist/`. Store images and icons under `assets/`.
 
 ## Build, Test, and Development Commands
-- `npm run dev`: Launches electron-vite in watch mode; keep console open for preload/main logs.
-- `npm run build`: Runs `tsc --noEmit` then produces production bundles in `out/`.
-- `npm run lint`: Executes ESLint across `src`; fix issues or justify disables inline.
-- `npm run test`: Invokes Jest (configure per feature as tests are added).
-- `npm run dist`: Builds and packages via electron-builder; installers land in `dist/`.
+- `npm run dev` spins up electron-vite with live reload—watch the terminal for preload and main logs.
+- `npm run build` type-checks with `tsc --noEmit` and creates production bundles in `out/`.
+- `npm run lint` runs ESLint across `src`; resolve issues or justify inline disables sparingly.
+- `npm run test` executes Jest suites; add flags like `--watch` for focused debugging.
+- `npm run dist` packages installers via electron-builder into `dist/`; ensure build succeeds before release.
 
 ## Coding Style & Naming Conventions
-- Use TypeScript with 2-space indentation and single quotes (ESLint will flag deviations).
-- Name files by responsibility (`WindowManager.ts`, `CaptureOverlay.tsx`) and prefer PascalCase for React components, camelCase for utilities.
-- Keep cross-process contracts in `src/shared` to avoid drift; update related type definitions in lockstep.
-- Favor explicit async error handling—see `ErrorService` patterns in `src/main/services`.
+- Use TypeScript, 2-space indentation, and single quotes; ESLint enforces formatting.
+- Components follow PascalCase (`CaptureOverlay.tsx`); utilities and hooks use camelCase (`useHotkey.ts`).
+- Keep renderer-only code out of the main process; share utilities through `src/shared/`.
+- Favor explicit async handling—see `src/main/services/ErrorService.ts` for patterns.
 
 ## Testing Guidelines
-- Jest is the default runner; colocate specs as `*.test.ts` / `*.test.tsx` near the code or under a `__tests__` folder when grouping integration flows.
-- Mock Electron APIs via lightweight adapters to keep tests deterministic.
-- Cover new public APIs, hotkey flows, and renderer state transitions; aim for stable >80% coverage on touched modules.
-- Run `npm run test` and share notable coverage deltas in the PR description.
+- Jest is the default runner; place tests as `*.test.ts(x)` beside source or in `__tests__/` for integrations.
+- Mock Electron APIs via lightweight adapters to keep suites deterministic.
+- Target >80% coverage on touched modules and exercise hotkey flows, preload bridges, and renderer state transitions.
+- Document notable coverage deltas and manual verification steps in PR descriptions.
 
 ## Commit & Pull Request Guidelines
-- With no formal history yet, follow Conventional Commits (`feat: add capture overlay shortcut`) to keep future changelog generation simple.
-- Keep commits focused; include TypeScript and ESLint fixes alongside the feature that required them.
-- Pull requests should describe intent, list key changes, note test commands run, and attach screenshots/GIFs for UI updates.
-- Link issues when available and request review from owners of affected areas (`main`, `renderer`, or shared contracts).
+- Follow Conventional Commits (e.g., `feat: add capture overlay shortcut`) to keep changelog generation simple.
+- Keep commits focused; include lint or type fixes that directly support the change set.
+- PRs should include intent, key changes, test commands executed, and screenshots/GIFs for UI deltas; link issues when available.
+- Request review from code owners for affected domains (`main`, `renderer`, shared contracts).
+
+## External Resources
+- Use the context7 integration to fetch documentation for third-party libraries.
+- Use the shadcn MCP interface when importing UI components from the shadcn registry.
