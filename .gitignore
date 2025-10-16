@@ -1,0 +1,132 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+out/
+bin/
+.task
+
+# TypeScript build info
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Electron specific
+/app
+/release
+
+# Cache directories
+.gocache/
+.cache/
+.parcel-cache/
+.eslintcache
+.vite/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Testing
+coverage/
+*.lcov
+.nyc_output
+test-results/
+playwright-report/
+
+# Local configuration files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Package files
+*.dmg
+*.pkg
+*.exe
+*.msi
+*.msix
+*.deb
+*.rpm
+*.AppImage
+*.snap
+*.tar.gz
+*.zip
+
+# Thoughts folder (local notes/thoughts that shouldn't be tracked)
+thoughts/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Security files (should not be committed)
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Electron-builder
+!electron-builder.yml
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux specific
+*~
+
+# macOS specific
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
