@@ -86,24 +86,23 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-dvh w-full justify-center bg-background text-foreground">
-      <div className="w-full max-w-3xl px-6 py-10">
-        <Card className="border border-border/60 bg-card text-card-foreground shadow-xl">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6">
-            <CardTitle className="text-2xl font-semibold tracking-tight">
-              Settings
-            </CardTitle>
+    <main className="flex h-full w-full justify-center bg-background text-foreground">
+      <div className="flex h-full w-full max-w-3xl flex-col px-6 py-8">
+        <Card className="flex h-full flex-col border border-border/60 bg-card/90 text-card-foreground shadow-[0_20px_60px_-25px_rgba(7,50,33,0.55)] backdrop-blur">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 border-b border-border/60 pb-4">
+            <CardTitle className="text-2xl font-semibold tracking-tight">Settings</CardTitle>
             <Button
               variant="ghost"
               size="icon"
               onClick={handleClose}
+              type="button"
               className="h-8 w-8 text-muted-foreground hover:text-foreground"
             >
               <X className="h-4 w-4" />
             </Button>
           </CardHeader>
 
-          <CardContent className="space-y-8">
+          <CardContent className="flex-1 space-y-8 overflow-y-auto px-6 py-6">
             {/* Save Folder Setting */}
             <div className="space-y-3">
               <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -117,7 +116,7 @@ const App: React.FC = () => {
                   placeholder="Select a folder to save your notes..."
                   className="flex-1"
                 />
-                <Button onClick={selectFolder} variant="outline">
+                <Button onClick={selectFolder} variant="outline" type="button">
                   Browse
                 </Button>
               </div>
@@ -133,7 +132,7 @@ const App: React.FC = () => {
                 onChange={(e) => setSettings({ ...settings, filenameTemplate: e.target.value })}
                 placeholder="Enter filename template..."
               />
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 Available placeholders: {'{yyyy}'}, {'{MM}'}, {'{dd}'}, {'{HH}'}, {'{mm}'}, {'{ss}'}, {'{title}'}
               </p>
             </div>
@@ -143,18 +142,19 @@ const App: React.FC = () => {
               <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 Hotkey
               </label>
-              <div className="rounded-md border bg-muted/30 p-3">
-                <p className="font-mono text-sm">Ctrl+Shift+Space</p>
+              <div className="rounded-md border border-border/60 bg-muted/20 p-3">
+                <p className="font-mono text-sm text-foreground/90">Ctrl+Shift+Space</p>
                 <p className="mt-1 text-sm text-muted-foreground">Customizable in future version</p>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3 border-t pt-6">
+            <div className="flex gap-3 border-t border-border/60 pt-6">
               <Button
                 onClick={testFileSave}
                 variant="outline"
                 className="flex-1"
+                type="button"
               >
                 Test Save File
               </Button>
@@ -162,6 +162,7 @@ const App: React.FC = () => {
                 onClick={saveSettings}
                 disabled={saving}
                 className="flex-1"
+                type="button"
               >
                 {saving ? 'Saving...' : 'Save Settings'}
               </Button>
@@ -182,7 +183,7 @@ const App: React.FC = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </main>
   );
 };
 

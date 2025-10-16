@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 
 interface AutoResizeTextareaProps
@@ -12,14 +12,14 @@ const AutoResizeTextarea = React.forwardRef<
 >(({ className, maxHeight = 400, onChange, onInput, ...props }, ref) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = 'auto';
       const newHeight = Math.min(textarea.scrollHeight, maxHeight);
       textarea.style.height = `${newHeight}px`;
     }
-  };
+  }, [maxHeight]);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -28,9 +28,7 @@ const AutoResizeTextarea = React.forwardRef<
       handleResize();
 
       // Add resize observer to handle content changes
-      const resizeObserver = new ResizeObserver(() => {
-        handleResize();
-      });
+      const resizeObserver = new ResizeObserver(handleResize);
 
       resizeObserver.observe(textarea);
 
@@ -38,7 +36,7 @@ const AutoResizeTextarea = React.forwardRef<
         resizeObserver.disconnect();
       };
     }
-  }, []);
+  }, [handleResize]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     handleResize();

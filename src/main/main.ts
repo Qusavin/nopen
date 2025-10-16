@@ -75,7 +75,7 @@ class Application {
       console.log('All windows closed, but keeping app running due to tray');
     });
 
-    app.on('before-quit', (event) => {
+    app.on('before-quit', (_event) => {
       console.log('App before quit - cleaning up...');
       this.hotkeyManager.unregisterAll();
       this.trayManager.destroy();

@@ -29,8 +29,6 @@ export class WindowManager {
       return;
     }
 
-    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-
     this.overlayWindow = new BrowserWindow({
       width: 600,
       height: 400,

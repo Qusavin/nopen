@@ -1,7 +1,8 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import OverlayApp from '@/overlay/src/App';
 import SettingsApp from '@/settings/src/App';
+
+document.documentElement.classList.add('dark');
 
 const container = document.getElementById('root');
 

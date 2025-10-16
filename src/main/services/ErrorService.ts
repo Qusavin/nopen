@@ -1,4 +1,3 @@
-import { app, Event } from 'electron';
 import { TrayManager } from './TrayManager';
 
 export class ErrorService {
