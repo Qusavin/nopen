@@ -1,9 +1,9 @@
 /// <reference path="../../../types/settings.d.ts" />
 import React, { useState, useEffect } from 'react';
+import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
 import '@/globals.css';
 
 interface AppSettings {
@@ -22,7 +22,6 @@ const App: React.FC = () => {
   });
   const [saving, setSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
-  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     loadSettings();
@@ -83,31 +82,24 @@ const App: React.FC = () => {
   };
 
   const handleClose = () => {
-    setOpen(false);
-    setTimeout(() => {
-      window.electronAPI.hideSettings();
-    }, 150);
-  };
-
-  const handleOpenChange = (isOpen: boolean) => {
-    if (!isOpen) {
-      handleClose();
-    }
+    window.electronAPI.hideSettings();
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <Card className="border-0 shadow-none">
+    <div className="flex min-h-dvh w-full justify-center bg-background text-foreground">
+      <div className="w-full max-w-3xl px-6 py-10">
+        <Card className="border border-border/60 bg-card text-card-foreground shadow-xl">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6">
-            <CardTitle className="text-2xl font-semibold">Settings</CardTitle>
+            <CardTitle className="text-2xl font-semibold tracking-tight">
+              Settings
+            </CardTitle>
             <Button
               variant="ghost"
               size="icon"
               onClick={handleClose}
-              className="h-8 w-8"
+              className="h-8 w-8 text-muted-foreground hover:text-foreground"
             >
-              ✕
+              <X className="h-4 w-4" />
             </Button>
           </CardHeader>
 
@@ -151,14 +143,14 @@ const App: React.FC = () => {
               <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 Hotkey
               </label>
-              <div className="p-3 border rounded-md bg-muted/30">
+              <div className="rounded-md border bg-muted/30 p-3">
                 <p className="font-mono text-sm">Ctrl+Shift+Space</p>
-                <p className="text-sm text-muted-foreground mt-1">Customizable in future version</p>
+                <p className="mt-1 text-sm text-muted-foreground">Customizable in future version</p>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3 pt-6 border-t">
+            <div className="flex gap-3 border-t pt-6">
               <Button
                 onClick={testFileSave}
                 variant="outline"
@@ -177,18 +169,20 @@ const App: React.FC = () => {
 
             {/* Status Message */}
             {statusMessage && (
-              <div className={`p-3 rounded-md text-sm ${
-                statusMessage.includes('Failed')
-                  ? 'bg-destructive/10 text-destructive border border-destructive/20'
-                  : 'bg-green-50 text-green-800 border border-green-200'
-              }`}>
+              <div
+                className={`rounded-md border p-3 text-sm ${
+                  statusMessage.includes('Failed')
+                    ? 'border-destructive/20 bg-destructive/10 text-destructive'
+                    : 'border-green-200 bg-green-50 text-green-800'
+                }`}
+              >
                 {statusMessage}
               </div>
             )}
           </CardContent>
         </Card>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 };
 
